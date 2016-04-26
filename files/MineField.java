@@ -11,7 +11,7 @@ import java.util.Random;
  * @filename MineField.java
  * @author Colin St. Claire
  * @created 04/14/16
- * @modified 04/20/16
+ * @modified 04/21/16
  */
 
 /**
@@ -40,8 +40,8 @@ public class MineField {
     public int[][] minefield;
     public boolean[][] fieldMarked;
     public boolean[][] fieldExposed;
-    public int rowSize = 5;
-    public int colSize = 5;
+    public int rowSize = 7;
+    public int colSize = 7;
     public final int EASY = 1;
     public final int MED = 2;
     public final int HARD = 3;
@@ -50,7 +50,6 @@ public class MineField {
 
     // constructor
     public MineField(int diff) {
-        assert diff >= 1 : diff <= 3;
         rowSize *= diff;
         colSize *= diff;
         mines *= diff;
@@ -88,27 +87,40 @@ public class MineField {
 
         int mineCount = 0;
 
-        if (!fieldMarked[row][col]) {
+        if (!fieldMarked[row][col] && !fieldExposed[row][col]) {
             for (int i = row - 1; i <= row + 1; i++) {
                 for (int j = col - 1; j <= col + 1; j++) {
-                    if (mineCheck(i, j)) mineCount++;
+                    if (mineCheck(i, j) && minefield[i][j] == -1) mineCount++;
+                    fieldExposed[row][col] = true;
                 }
             }
             minefield[row][col] = mineCount;
-            fieldExposed[row][col] = true;
+
+            if (mineCount == 0) { // if no bombs, expose adj. cells and check each cell for adj mines
+                for (int i = row - 1; i <= row + 1; i++) {
+                    for (int j = col - 1; j <= col + 1; j++) {
+                        if (mineCheck(i, j) && !fieldExposed[i][j]) {
+                            System.out.println("Inside expose(): cells[" + i + "][" + j + "]");
+                            expose(i, j);
+                        }
+                    }
+                }
+            }
         }
+
         return mineCount;
     }
 
+
     private boolean mineCheck(int row, int col) {
         // if the cell is valid and is a bomb, return 1 , else return 0
-        if (row >= 0 && row < rowSize && col >= 0 && col < colSize && minefield[row][col] == -1) {
+        if (row >= 0 && row < rowSize && col >= 0 && col < colSize) {
             return true;
         }
         return false;
     }
 
-    //@TODO: 4/14/16
+
     public int isExposed(int row, int col) {
         // computes and returns how many cells are exposed
         int count = 0;
@@ -135,11 +147,11 @@ public class MineField {
 
 
     public static void main(String[] args) {
-        MineField mf = new MineField(1);
+        MineField mf = new MineField(5);
         mf.placeMines();
         for (int i = 0;  i < mf.rowSize; i++) {
             for (int j = 0; j < mf.colSize; j++) {
-                //mf.expose(i, j);
+                mf.expose(i, j);
                 System.out.println("minefield[" + i + "][" + j + "] = " + mf.minefield[i][j]);
             }
         }

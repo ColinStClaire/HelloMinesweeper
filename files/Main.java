@@ -8,16 +8,22 @@ import javafx.stage.Stage;
 
 
 /**
- * Created by colinstclaire on 4/19/16.
+ * @filename Main.java
+ * @author Colin St. Claire
+ * @created 4/19/2016
+ * @modified 4/19/2016
  */
-public class Main extends Application{
+
+public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("View.fxml"));
         primaryStage.setTitle("Welcome to Minesweeper!");
-        primaryStage.setScene(new Scene(root, 500, 500));
+        primaryStage.setScene(new Scene(root));
+        primaryStage.setResizable(false);
         primaryStage.show();
+
     }
 
 
