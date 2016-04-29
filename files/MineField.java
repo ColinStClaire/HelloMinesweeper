@@ -121,18 +121,6 @@ public class MineField {
     }
 
 
-    public int isExposed(int row, int col) {
-        // computes and returns how many cells are exposed
-        int count = 0;
-        for (int i = 0; i < rowSize; i++) {
-            for (int j = 0; j < colSize; j++) {
-                if (fieldExposed[i][j]) count++;
-            }
-        }
-        return count;
-    }
-
-
     public int unexposedCount() {
         // compute and return how many cells can be exposed without setting off a bomb
         int count = 0;
@@ -145,6 +133,15 @@ public class MineField {
         return count;
     }
 
+    public boolean winCheck() {
+        int count = 0;
+        for (int i = 0; i < rowSize; i++) {
+            for (int j = 0; j < colSize; j++) {
+                if (!fieldExposed[i][j]) count++;
+            }
+        }
+        return mines == count;
+    }
 
     public static void main(String[] args) {
         MineField mf = new MineField(5);
