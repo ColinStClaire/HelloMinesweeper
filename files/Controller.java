@@ -172,15 +172,13 @@ public class Controller {
                 mf.fieldExposed[i][j] = true;
                 current.setText("");
                 if (mf.minefield[i][j] == -1 && (!win)){
-                     current.setStyle("-fx-background-color: red");
+                    current.setStyle("-fx-background-color: red");
+                } else {
+                    current.setStyle("-fx-background-color: lightgrey");
                 }
             }
         }
-        for (int i = 0; i < mf.rowSize; i++) {
-            for (int j = 0; j < mf.colSize; j++) {
-                cells[i][j].toBack();
-            }
-        }
+        
         if (win) {
             System.out.println("You win!");
             greetBox.toFront();

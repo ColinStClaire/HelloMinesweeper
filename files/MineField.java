@@ -42,9 +42,6 @@ public class MineField {
     public boolean[][] fieldExposed;
     public int rowSize = 7;
     public int colSize = 7;
-    public final int EASY = 1;
-    public final int MED = 2;
-    public final int HARD = 3;
     public int mines = 8;
 
 
@@ -113,7 +110,7 @@ public class MineField {
 
 
     private boolean mineCheck(int row, int col) {
-        // if the cell is valid and is a bomb, return 1 , else return 0
+        // return whether or not the cell is a valid index
         if (row >= 0 && row < rowSize && col >= 0 && col < colSize) {
             return true;
         }
@@ -144,6 +141,7 @@ public class MineField {
     }
 
     public static void main(String[] args) {
+        // simple test
         MineField mf = new MineField(5);
         mf.placeMines();
         for (int i = 0;  i < mf.rowSize; i++) {
