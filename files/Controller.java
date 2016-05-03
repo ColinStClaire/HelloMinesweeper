@@ -73,6 +73,7 @@ public class Controller {
 
     private void startGame(int diff) {
         MineField mf = new MineField(diff);
+        board.getChildren().clear();
         cells = new Button[mf.rowSize][mf.colSize];
         // add buttons
         for (int i = 0 ; i < mf.rowSize; i++) {
