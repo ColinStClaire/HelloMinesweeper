@@ -178,7 +178,7 @@ public class Controller {
                 }
             }
         }
-        
+
         if (win) {
             System.out.println("You win!");
             greetBox.toFront();
